@@ -3,11 +3,16 @@
 
 # Question 1 (Naked Twins)
 Q: How do we use constraint propagation to solve the naked twins problem?  
-A: *Student should provide answer here*
+A: To solve the naked twins problem, we add another strategy to our existing list (eliminate and only_choice).
+The logic is that if there are exactly two cells in a unit having the same two possible values, then the two
+values must be distributed between those two cells. Therefore, we should eliminate those values from all of the other
+cells in the same unit in which they appear, and continue reducing.
 
 # Question 2 (Diagonal Sudoku)
 Q: How do we use constraint propagation to solve the diagonal sudoku problem?  
-A: *Student should provide answer here*
+A: Here we can simply add another set of units (the diagonal cells from A1-I9 and from A9-I1) to our existing unit list.
+Since the functions that we've already defined are oblivious to the geometry of the units, and are just enforcing
+constraints with respect to lists of cells, we don't need to make any changes to any of our elimination strategies.
 
 ### Install
 
