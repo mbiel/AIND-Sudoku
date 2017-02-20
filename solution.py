@@ -38,7 +38,7 @@ def naked_twins(values):
     # Find all instances of naked twins
     # Eliminate the naked twins as possibilities for their peers
     for unit in unitlist:
-        twins = [(a, b, values[a]) for a in unit for b in unit if a != b and len(values[a]) == 2 and values[a] == values[b]] #TODO - this creates duplicates
+        twins = [(a, b, values[a]) for a in unit for b in unit if a < b and len(values[a]) == 2 and values[a] == values[b]]
         if len(twins) > 0:
             for twin in twins:
                 nontwins = [x for x in unit if not x in twin]
