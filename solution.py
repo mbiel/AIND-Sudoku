@@ -1,3 +1,5 @@
+import re
+
 assignments = []
 rows = 'ABCDEFGHI'
 cols = '123456789'
@@ -35,16 +37,19 @@ def naked_twins(values):
     Returns:
         the values dictionary with the naked twins eliminated from peers.
     """
-    # Find all instances of naked twins
-    # Eliminate the naked twins as possibilities for their peers
     for unit in unitlist:
+        # Find all instances of naked twins -- all instances of two cells in the same unit sharing identical sets of
+        # possible values of length 2
         twins = [(a, b, values[a]) for a in unit for b in unit if a < b and len(values[a]) == 2 and values[a] == values[b]]
         if len(twins) > 0:
             for twin in twins:
+                # Eliminate the naked twins as possibilities for their peers
+                # For each cell in the unit that is not a twin, remove the twin values from the cell
                 nontwins = [x for x in unit if not x in twin]
                 for nontwin in nontwins:
-                    for digit in twin[2]:
-                        assign_value(values, nontwin, values[nontwin].replace(digit, ''))
+                    # Use regex to replace twin values in each non-twin
+                    new_value = re.sub(r'[' + twin[2] + ']', '', values[nontwin])
+                    assign_value(values, nontwin, new_value)
     return values
 
 def grid_values(grid):
