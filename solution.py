@@ -87,6 +87,11 @@ def display(values):
     print
 
 def eliminate(values):
+    """
+    Go through all the boxes, and whenever there is a box with a value, eliminate this value from the values of all its peers.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form.
+    """
     solved_values = [box for box in values.keys() if len(values[box]) == 1]
     for box in solved_values:
         digit = values[box]
@@ -95,6 +100,11 @@ def eliminate(values):
     return values
 
 def only_choice(values):
+    """
+    Go through all the units, and whenever there is a unit with a value that only fits in one box, assign the value to this box.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form.
+    """
     for unit in unitlist:
         for digit in '123456789':
             dplaces = [box for box in unit if digit in values[box]]
@@ -103,7 +113,14 @@ def only_choice(values):
     return values
 
 def reduce_puzzle(values):
-    solved_values = [box for box in values.keys() if len(values[box]) == 1]
+    """
+    Iterate eliminate(), only_choice(), and naked_twins(). If at some point, there is a box with no available values, return False.
+    If the sudoku is solved, return the sudoku.
+    If after an iteration of both functions, the sudoku remains the same, return the sudoku.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form, or False if an error occurred (some box ended up with an
+    empty list of possible values).
+    """
     stalled = False
     while not stalled:
         solved_values_before = len([box for box in values.keys() if len(values[box]) == 1])
@@ -117,6 +134,11 @@ def reduce_puzzle(values):
     return values
 
 def search(values):
+    """
+    Using depth-first search and propagation, create a search tree and solve the sudoku.
+    Input: A sudoku in dictionary form.
+    Output: The resulting sudoku in dictionary form, or False if an error occurred.
+    """
     reduced = reduce_puzzle(values)
     if not reduced:
         # sanity check failed
